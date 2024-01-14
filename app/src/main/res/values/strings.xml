@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NetClanExplorer</string>
+    <string name="howdy_bibek_bhujel">Howdy bibek bhujel!!</string>
+    <string name="pokhara_lekhnath">Pokhara, Lekhnath</string>
+    <string name="search">Search</string>
+    <string name="location_range">Within %1$s meters</string>
+</resources>
