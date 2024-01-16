@@ -213,7 +213,9 @@ fun NetClanExplorerApp(
                     onBackButtonClicked = {
                         navController.popBackStack()
                     },
-                    onSaveAndExploreButtonClicked = {}
+                    onSaveAndExploreButtonClicked = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }

@@ -73,7 +73,7 @@ fun BusinessCardItem(person: Person, modifier: Modifier = Modifier) {
                     modifier = Modifier.padding(start = 60.dp)
                 ) {
                     Text(
-                        person.firstName + " " + (person.middleName ?: "") + person.lastName,
+                        person.firstName + " " + ((person.middleName ?: "") + " ") + person.lastName,
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(

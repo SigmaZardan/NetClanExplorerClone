@@ -1,5 +1,6 @@
 package com.example.netclanexplorer.screens
 
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,16 +32,17 @@ import com.example.netclanexplorer.ui.theme.progress_indicator
 import com.example.netclanexplorer.ui.theme.progress_track_color
 import com.example.netclanexplorer.ui.theme.surface_light
 
+
 @Composable
 fun PersonalCardItem(person: Person, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
     ) {
         Box(
-            modifier = Modifier.padding(15.dp)
+            modifier = Modifier
+                .padding(15.dp)
         ) {
             ElevatedCard(
-                modifier = Modifier.padding(start = 25.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 2.dp
                 ),
@@ -63,7 +65,8 @@ fun PersonalCardItem(person: Person, modifier: Modifier = Modifier) {
                 Column(
                     modifier = Modifier.padding(start = 60.dp)
                 ) {
-                    val name = person.firstName + " " + (person.middleName ?: "") + person.lastName
+                    val name =
+                        person.firstName + " " + ((person.middleName ?: "") + " ") + person.lastName
                     Text(
                         name,
                         style = MaterialTheme.typography.bodyLarge
