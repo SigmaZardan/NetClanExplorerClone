@@ -4,6 +4,7 @@ import com.example.netclanexplorer.model.Person
 
 object DataSource {
     private const val commonTitle = "Hi! I am open for new connections \uD83D\uDE0A\\"
+    const val MAX_AVAILABLE_STATUS_COUNT = 250
     val personList = listOf(
         Person(
             firstName = "John",
@@ -47,5 +48,22 @@ object DataSource {
 
 
         )
+    )
+    val availabilityOptions = listOf(
+        "Available | Hey Let Us Connect",
+        "Away | Stay Discrete And Watch",
+        "Busy | Do Not Disturb | Will Catch Up Later",
+        "SOS | Emergency! Need Assistance! HELP"
+    )
+
+    val purposesList = listOf(
+        "Coffee",
+        "Business",
+        "Hobbies",
+        "Friendship",
+        "Movies",
+        "Dinning",
+        "Dating",
+        "Matrimony"
     )
 }

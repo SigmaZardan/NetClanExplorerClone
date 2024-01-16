@@ -1,6 +1,7 @@
 package com.example.netclanexplorer
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -41,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.netclanexplorer.screens.BusinessScreen
 import com.example.netclanexplorer.screens.MerchantScreen
 import com.example.netclanexplorer.screens.PersonalScreen
+import com.example.netclanexplorer.screens.RefineScreen
 import com.example.netclanexplorer.ui.theme.tab_row_container_color
 import kotlinx.coroutines.launch
 
@@ -53,6 +58,11 @@ enum class HomeTabs {
     Personal, Business, Merchant
 }
 
+data class ScaffoldViewState(
+    val title: @Composable () -> Unit = {},
+    val navigationIcon: @Composable () -> Unit = {}
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NetClanExplorerApp(
@@ -62,10 +72,20 @@ fun NetClanExplorerApp(
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { HomeTabs.entries.size })
     val selectedTabIndex = remember { derivedStateOf { pagerState.currentPage } }
+    val scaffoldState = remember {
+        mutableStateOf(
+            ScaffoldViewState(
+            )
+        )
+
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             NetClanTopAppBar(
+                scaffoldState = scaffoldState
+
             )
         }
     )
@@ -75,6 +95,8 @@ fun NetClanExplorerApp(
             startDestination = NetClanScreen.Explore.name,
             modifier = Modifier.padding(paddingValues)
         ) {
+
+
             composable(route = NetClanScreen.Explore.name) {
                 TabRow(
                     selectedTabIndex = selectedTabIndex.value,
@@ -109,6 +131,70 @@ fun NetClanExplorerApp(
                         .padding(top = 60.dp)
                         .fillMaxSize()
                 ) {
+                    LaunchedEffect(Unit) {
+                        scaffoldState.value = ScaffoldViewState(
+                            title = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(start = 15.dp),
+                                    ) {
+                                        Text(
+                                            stringResource(R.string.howdy_bibek_bhujel),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            style = MaterialTheme.typography.displayMedium
+                                        )
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(
+                                                imageVector = Icons.Filled.LocationOn,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.onPrimary,
+                                                modifier = Modifier
+                                                    .size(18.dp)
+                                                    .padding(end = 4.dp)
+                                            )
+                                            Text(
+                                                stringResource(R.string.pokhara_lekhnath),
+                                                color = MaterialTheme.colorScheme.onPrimary,
+                                                style = MaterialTheme.typography.displaySmall
+                                            )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.weight(1f))
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.padding(end = 8.dp)
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.refine),
+                                            contentDescription = "Refine",
+                                            modifier = Modifier
+                                                .clickable { navController.navigate(NetClanScreen.Refine.name) }
+                                                .size(30.dp),
+                                            tint = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                        Text(
+                                            "Refine", style = MaterialTheme.typography.displaySmall,
+                                            color = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                    }
+                                }
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = { }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.menu),
+                                        contentDescription = "Menu",
+                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+
+
+                            }
+                        )
+                    }
                     when (HomeTabs.entries[selectedTabIndex.value]) {
                         HomeTabs.Personal -> PersonalScreen()
                         HomeTabs.Business -> {
@@ -122,9 +208,13 @@ fun NetClanExplorerApp(
                 }
             }
             composable(route = NetClanScreen.Refine.name) {
-                Column() {
-                    Text("Hello")
-                }
+                RefineScreen(
+                    scaffoldState = scaffoldState,
+                    onBackButtonClicked = {
+                        navController.popBackStack()
+                    },
+                    onSaveAndExploreButtonClicked = {}
+                )
             }
         }
     }
@@ -135,87 +225,18 @@ fun NetClanExplorerApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetClanTopAppBar(
+    scaffoldState: MutableState<ScaffoldViewState>
 
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.padding(start = 15.dp),
-                ) {
-                    Text(
-                        stringResource(R.string.howdy_bibek_bhujel),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        style = MaterialTheme.typography.displayMedium
-                    )
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Filled.LocationOn,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier
-                                .size(18.dp)
-                                .padding(end = 4.dp)
-                        )
-                        Text(
-                            stringResource(R.string.pokhara_lekhnath),
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            style = MaterialTheme.typography.displaySmall
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.refine),
-                            contentDescription = "Refine",
-                            modifier = Modifier
-                                .size(30.dp),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
+        title = scaffoldState.value.title,
 
-                    Text(
-                        "Refine", style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
+        navigationIcon = scaffoldState.value.navigationIcon
 
-
-            }
-
-
-        },
-        navigationIcon = {
-            IconButton(
-                onClick = {},
-                content = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.menu),
-                        contentDescription = "Menu",
-                        modifier = Modifier.size(40.dp),
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            )
-
-        },
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NetClanTopAppBarPreview() {
-    NetClanTopAppBar()
-
 }
 
 
