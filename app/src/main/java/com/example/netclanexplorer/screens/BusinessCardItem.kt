@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -40,6 +41,7 @@ import com.example.netclanexplorer.ui.theme.progress_track_color
 import com.example.netclanexplorer.ui.theme.surface_light
 import com.example.netclanexplorer.ui.theme.tab_row_container_color
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusinessCardItem(person: Person, modifier: Modifier = Modifier) {
     Column(
@@ -50,6 +52,7 @@ fun BusinessCardItem(person: Person, modifier: Modifier = Modifier) {
         ) {
             ElevatedCard(
                 modifier = Modifier.padding(start = 25.dp),
+                onClick = {},
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 2.dp
                 ),
@@ -73,7 +76,8 @@ fun BusinessCardItem(person: Person, modifier: Modifier = Modifier) {
                     modifier = Modifier.padding(start = 60.dp)
                 ) {
                     Text(
-                        person.firstName + " " + ((person.middleName ?: "") + " ") + person.lastName,
+                        person.firstName + " " + ((person.middleName
+                            ?: "") + " ") + person.lastName,
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(

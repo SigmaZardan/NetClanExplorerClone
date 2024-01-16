@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,16 +34,18 @@ import com.example.netclanexplorer.ui.theme.progress_track_color
 import com.example.netclanexplorer.ui.theme.surface_light
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonalCardItem(person: Person, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
     ) {
         Box(
-            modifier = Modifier
-                .padding(15.dp)
+            modifier = Modifier.padding(15.dp)
         ) {
             ElevatedCard(
+                modifier = Modifier.padding(start = 25.dp),
+                onClick = {},
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 2.dp
                 ),
