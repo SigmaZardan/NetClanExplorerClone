@@ -190,7 +190,7 @@ fun SelectHyperLocalDistanceItem() {
                 "${sliderPosition.toInt()} +" else sliderPosition.toInt().toString()
 
             if (sliderPosition > valueRange.start) {
-                SliderLabel(
+                SliderLabelItem(
                     label = endValueText,
                     minWidth = labelMinWidth,
                     modifier = Modifier
@@ -265,7 +265,7 @@ fun SelectPurposeItem() {
 }
 
 @Composable
-fun SliderLabel(
+fun SliderLabelItem(
     label: String = "anything",
     minWidth: Dp = 40.dp,
     modifier: Modifier = Modifier
