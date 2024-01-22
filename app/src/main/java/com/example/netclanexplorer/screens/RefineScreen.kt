@@ -179,7 +179,7 @@ fun SelectHyperLocalDistanceItem() {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val offset = getSliderOffset(
+            val offset = getSliderOffsetItem(
                 value = sliderPosition,
                 valueRange = valueRange,
                 boxWidth = maxWidth,
@@ -292,7 +292,7 @@ fun SliderLabelItem(
 
 }
 
-private fun getSliderOffset(
+private fun getSliderOffsetItem(
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
     boxWidth: Dp,
